@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -62,8 +63,8 @@ const TestPage = () => {
   const handlePrevQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
-      const prevAnswer = currentTestAttempt.answers[questions[currentQuestionIndex - 1].questionNo];
-      setCurrentSelectedOption(prevAnswer);
+      // Removed the code that sets the previously selected option
+      setCurrentSelectedOption(undefined);
     }
   };
   
@@ -82,6 +83,7 @@ const TestPage = () => {
     const index = questions.findIndex(q => q.questionNo === questionNo);
     if (index !== -1) {
       setCurrentQuestionIndex(index);
+      setCurrentSelectedOption(undefined);
       setStatus(TestStatus.IN_PROGRESS);
     }
   };
