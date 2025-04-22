@@ -23,7 +23,6 @@ const TestPage = () => {
   
   const [status, setStatus] = useState<TestStatus>(TestStatus.STARTING);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentSelectedOption, setCurrentSelectedOption] = useState<number | undefined>(undefined);
   
   const test = testId ? getTest(testId) : undefined;
   
@@ -39,11 +38,6 @@ const TestPage = () => {
     }
   }, [user, test, status, navigate, startTest]);
   
-  // Reset selected option whenever the current question changes
-  useEffect(() => {
-    setCurrentSelectedOption(undefined);
-  }, [currentQuestionIndex]);
-  
   if (!user || !test || !currentTestAttempt) {
     return null;
   }
@@ -53,7 +47,6 @@ const TestPage = () => {
   
   const handleSelectOption = (questionNo: number, option: number) => {
     submitAnswer(questionNo, option);
-    setCurrentSelectedOption(option);
   };
   
   const handleNextQuestion = () => {
@@ -88,6 +81,9 @@ const TestPage = () => {
       setStatus(TestStatus.IN_PROGRESS);
     }
   };
+
+  // Get the saved answer for the current question from the attempt, if any
+  const selectedOption = currentTestAttempt.answers[currentQuestion.questionNo];
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -125,7 +121,7 @@ const TestPage = () => {
             
             <TestQuestion
               question={currentQuestion}
-              selectedOption={currentSelectedOption}
+              selectedOption={undefined}  // Always pass undefined to ensure no option is pre-selected
               onSelectOption={handleSelectOption}
               canNavigate={true}
               onNavigateNext={handleNextQuestion}
