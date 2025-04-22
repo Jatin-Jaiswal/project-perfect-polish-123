@@ -39,6 +39,11 @@ const TestPage = () => {
     }
   }, [user, test, status, navigate, startTest]);
   
+  // Reset selected option whenever the current question changes
+  useEffect(() => {
+    setCurrentSelectedOption(undefined);
+  }, [currentQuestionIndex]);
+  
   if (!user || !test || !currentTestAttempt) {
     return null;
   }
@@ -54,7 +59,6 @@ const TestPage = () => {
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setCurrentSelectedOption(undefined);
     } else {
       setStatus(TestStatus.REVIEW);
     }
@@ -63,8 +67,6 @@ const TestPage = () => {
   const handlePrevQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
-      // Removed the code that sets the previously selected option
-      setCurrentSelectedOption(undefined);
     }
   };
   
@@ -83,7 +85,6 @@ const TestPage = () => {
     const index = questions.findIndex(q => q.questionNo === questionNo);
     if (index !== -1) {
       setCurrentQuestionIndex(index);
-      setCurrentSelectedOption(undefined);
       setStatus(TestStatus.IN_PROGRESS);
     }
   };
