@@ -14,6 +14,7 @@ interface TestQuestionProps {
   onNavigatePrev: () => void;
   isFirst: boolean;
   isLast: boolean;
+  isAnswered: boolean;  // New prop to check if the question has been answered
 }
 
 export const TestQuestion = ({
@@ -24,7 +25,8 @@ export const TestQuestion = ({
   onNavigateNext,
   onNavigatePrev,
   isFirst,
-  isLast
+  isLast,
+  isAnswered
 }: TestQuestionProps) => {
   return (
     <Card className="w-full max-w-3xl mx-auto">
@@ -70,7 +72,7 @@ export const TestQuestion = ({
         <Button
           variant="default"
           onClick={onNavigateNext}
-          disabled={!canNavigate || (!selectedOption && !isLast)}
+          disabled={!canNavigate || (!isAnswered && !isLast)}
         >
           {isLast ? "Review Answers" : "Next"}
         </Button>

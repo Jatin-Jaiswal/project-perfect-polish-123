@@ -82,8 +82,8 @@ const TestPage = () => {
     }
   };
 
-  // Get the saved answer for the current question from the attempt, if any
-  const selectedOption = currentTestAttempt.answers[currentQuestion.questionNo];
+  // Check if the current question has been answered (for enabling/disabling Next button)
+  const isCurrentQuestionAnswered = currentQuestion.questionNo in currentTestAttempt.answers;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -128,6 +128,7 @@ const TestPage = () => {
               onNavigatePrev={handlePrevQuestion}
               isFirst={currentQuestionIndex === 0}
               isLast={currentQuestionIndex === questions.length - 1}
+              isAnswered={isCurrentQuestionAnswered}  // Pass whether question is answered for Next button enablement
             />
           </>
         )}
