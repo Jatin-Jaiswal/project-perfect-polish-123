@@ -82,6 +82,11 @@ const TestPage = () => {
     }
   };
 
+  // Get the selected option for the current question if it exists
+  const selectedOption = currentQuestion 
+    ? currentTestAttempt.answers[currentQuestion.questionNo] 
+    : undefined;
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
@@ -118,7 +123,7 @@ const TestPage = () => {
             
             <TestQuestion
               question={currentQuestion}
-              selectedOption={currentTestAttempt.answers[currentQuestion.questionNo]}
+              selectedOption={selectedOption}
               onSelectOption={handleSelectOption}
               canNavigate={true}
               onNavigateNext={handleNextQuestion}
