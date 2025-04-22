@@ -3,6 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Header } from "@/components/layout/Header";
 import { AdminTestList } from "@/components/admin/TestList";
 import { CSVUploader } from "@/components/admin/CSVUploader";
+import { AdminReports } from "@/components/admin/AdminReports";
 import { UserTestList } from "@/components/user/UserTestList";
 
 const Dashboard = () => {
@@ -23,6 +24,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-8">
               <CSVUploader />
+              <AdminReports />
             </div>
             <div className="space-y-8">
               <AdminTestList />
