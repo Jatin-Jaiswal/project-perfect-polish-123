@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -23,6 +22,7 @@ const TestPage = () => {
   
   const [status, setStatus] = useState<TestStatus>(TestStatus.STARTING);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentSelectedOption, setCurrentSelectedOption] = useState<number | undefined>(undefined);
   
   const test = testId ? getTest(testId) : undefined;
   
@@ -47,11 +47,13 @@ const TestPage = () => {
   
   const handleSelectOption = (questionNo: number, option: number) => {
     submitAnswer(questionNo, option);
+    setCurrentSelectedOption(option);
   };
   
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentSelectedOption(undefined);
     } else {
       setStatus(TestStatus.REVIEW);
     }
@@ -60,6 +62,8 @@ const TestPage = () => {
   const handlePrevQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
+      const prevAnswer = currentTestAttempt.answers[questions[currentQuestionIndex - 1].questionNo];
+      setCurrentSelectedOption(prevAnswer);
     }
   };
   
@@ -81,11 +85,6 @@ const TestPage = () => {
       setStatus(TestStatus.IN_PROGRESS);
     }
   };
-
-  // Get the selected option for the current question if it exists
-  const selectedOption = currentQuestion 
-    ? currentTestAttempt.answers[currentQuestion.questionNo] 
-    : undefined;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -123,7 +122,7 @@ const TestPage = () => {
             
             <TestQuestion
               question={currentQuestion}
-              selectedOption={selectedOption}
+              selectedOption={currentSelectedOption}
               onSelectOption={handleSelectOption}
               canNavigate={true}
               onNavigateNext={handleNextQuestion}
