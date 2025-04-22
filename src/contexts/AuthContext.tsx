@@ -1,9 +1,15 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { User } from "@/types";
 
-// Admin emails hardcoded as requested
-const ADMIN_EMAILS = ["admin@test.com", "admin2@test.com"];
+// Updated admin emails as requested
+const ADMIN_EMAILS = [
+  "admin@test.com", 
+  "admin2@test.com", 
+  "jatinjaiswal673@gmail.com",
+  "jatin5555",
+  "goursourabh1354@gmail.com",
+  "siyaram1354"
+];
 
 interface AuthContextType {
   user: User | null;
